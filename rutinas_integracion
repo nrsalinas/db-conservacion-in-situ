@@ -1,0 +1,30 @@
+Nombres científicos
+
+- Verificación grafía en TNRS.
+
+- Verificación status taxonomico con Tropicos, World Flora Online, Leipzip catalogue y POWO. Consenso de mayoría.
+
+	- Si no son aceptadas: generar listado especies para checar
+
+- Nombres base para flora Bogotá: Ingresarlos como determinaciones de 2020 por fuente "Flora de Bogotá"
+
+- Consultar catálogo de Colombia y obtener origen de las plantas.
+
+- Consultar base de datos GEPC y obtener categorías IUCN.
+
+
+Nombres colectores
+
+- Primero tomar nombres de la pestaña 3
+
+- Dividir nombres en nombre-apellidos e incluirlos en la tabla Persons
+
+
+
+
+Datos geograficos
+
+- Verificar presencia de coordenadas en el polígono de Bogotá
+
+- Obtener distribuciones generales de consultas en GBIF + Catálogo de plantas de Colombia
+
