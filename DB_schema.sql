@@ -37,11 +37,11 @@ CREATE TABLE `Taxa` (
 	`Name` VARCHAR(255) NOT NULL,
 	`AcceptedName` SMALLINT UNSIGNED,
 	`Authority` SMALLINT UNSIGNED,
-	`Author` VARCHAR(100) NOT NULL,
+	`Author` VARCHAR(100),
 	`Protologue` VARCHAR(255), -- Nomenclatural publication from IPNI 
 	`Parent` SMALLINT UNSIGNED,
 	`Comment` VARCHAR(255),
-	`CheckPriority` SMALLINT UNSIGNED,
+	`CheckPriority` SMALLINT UNSIGNED, -- 0 (low priority) to 5 (high priority)
 	`Distribution` SMALLINT UNSIGNED, -- 0: Endémica, 1: Cundinamarca, 2: Colombia, 3: Sudamerica, 4: Americas
 	`TimeStamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
@@ -112,15 +112,13 @@ DROP TABLE IF EXISTS `Identifications`;
 CREATE TABLE `Identifications` (
 	`IdentificationID`  INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
 	`Occurrence`  INT UNSIGNED,
-	`Name` SMALLINT UNSIGNED,
+	`NameID` SMALLINT UNSIGNED,
 	`HybridSecondaryParental` SMALLINT UNSIGNED, -- If hybrid hasn't it own name, here the second parental name is included
 	`Certainty` VARCHAR(20),
 	`IdentifiedBy` INT UNSIGNED, -- Sometimes id comes from a document; in that case identifier can be NULL
 	`Publication` SMALLINT UNSIGNED, 
 	`Date` DATE,
-	`TimeStamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	FOREIGN KEY (`Name`) REFERENCES Taxa (`TaxonID`),
-	FOREIGN KEY (`HybridSecondaryParental`) REFERENCES Taxa (`TaxonID`)
+	`TimeStamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 -- ------
@@ -142,8 +140,8 @@ CREATE TABLE `Occurrences` (
 	`Use` VARCHAR(255),
 	`CommonName` VARCHAR(255),
 	`Comment` VARCHAR(500),
-	`TimeStamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	FOREIGN KEY (`Reference`) REFERENCES Sources (`SourceID`)
+	`TimeStamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+	-- FOREIGN KEY (`Reference`) REFERENCES Sources (`SourceID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 -- -----
@@ -346,7 +344,7 @@ CREATE TABLE `SampleOccurrences` (
 	`TimeStamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-
+/*
 ALTER TABLE `Taxa` 
 	ADD CONSTRAINT `taxa_parent_foreign` 
 	FOREIGN KEY(`Parent`) 
@@ -387,6 +385,18 @@ ALTER TABLE `PeoplePersons`
 	ADD CONSTRAINT `peoplepersons_person_foreign` 
 	FOREIGN KEY (`Person`) 
 	REFERENCES `Persons` (`PersonID`);
+
+
+ALTER TABLE `Identifications` 
+	ADD CONSTRAINT `identifications_nameid_foreign` 
+	FOREIGN KEY (`NameID`) 
+	REFERENCES `Taxa` (`TaxonID`);
+
+ALTER TABLE `Identifications` 
+	ADD CONSTRAINT `identifications_hibrid2_foreign` 
+	FOREIGN KEY (`HybridSecondaryParental`) 
+	REFERENCES `Taxa` (`TaxonID`);
+
 
 ALTER TABLE `Identifications` 
 	ADD CONSTRAINT `identifications_occurrence_foreign` 
@@ -547,3 +557,5 @@ ALTER TABLE `SampleOccurrences`
 	ADD CONSTRAINT `sampleocc_occur_foreign` 
 	FOREIGN KEY (`Occurrence`) 
 	REFERENCES `Occurrences`(`OccurrenceID`);
+
+*/
