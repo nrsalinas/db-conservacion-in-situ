@@ -35,11 +35,11 @@ DROP TABLE IF EXISTS `Taxa`;
 CREATE TABLE `Taxa` (
 	`TaxonID` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	`Name` VARCHAR(255) NOT NULL,
-	`AcceptedName` SMALLINT UNSIGNED,
+	`AcceptedName` SMALLINT UNSIGNED, -- references `Taxa.TaxonID`
 	`Authority` SMALLINT UNSIGNED,
 	`Author` VARCHAR(100),
 	`Protologue` VARCHAR(255), -- Nomenclatural publication from IPNI 
-	`Parent` SMALLINT UNSIGNED,
+	`Parent` SMALLINT UNSIGNED, -- references `Taxa.TaxonID`
 	`Comment` VARCHAR(255),
 	`CheckPriority` SMALLINT UNSIGNED, -- 0 (low priority) to 5 (high priority)
 	`Distribution` SMALLINT UNSIGNED, -- 0: Endémica, 1: Cundinamarca, 2: Colombia, 3: Sudamerica, 4: Americas
@@ -112,7 +112,7 @@ DROP TABLE IF EXISTS `Identifications`;
 CREATE TABLE `Identifications` (
 	`IdentificationID`  INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
 	`Occurrence`  INT UNSIGNED,
-	`NameID` SMALLINT UNSIGNED,
+	`Name` SMALLINT UNSIGNED,
 	`HybridSecondaryParental` SMALLINT UNSIGNED, -- If hybrid hasn't it own name, here the second parental name is included
 	`Certainty` VARCHAR(20),
 	`IdentifiedBy` INT UNSIGNED, -- Sometimes id comes from a document; in that case identifier can be NULL
@@ -344,16 +344,6 @@ CREATE TABLE `SampleOccurrences` (
 	`TimeStamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-/*
-ALTER TABLE `Taxa` 
-	ADD CONSTRAINT `taxa_parent_foreign` 
-	FOREIGN KEY(`Parent`) 
-	REFERENCES `Taxa`(`TaxonID`);
-
-ALTER TABLE `Taxa` 
-	ADD CONSTRAINT `taxa_acceptedname_foreign` 
-	FOREIGN KEY(`AcceptedName`) 
-	REFERENCES `Taxa`(`TaxonID`);
 
 ALTER TABLE `Taxa` 
 	ADD CONSTRAINT `taxa_authority_foreign` 
@@ -389,7 +379,7 @@ ALTER TABLE `PeoplePersons`
 
 ALTER TABLE `Identifications` 
 	ADD CONSTRAINT `identifications_nameid_foreign` 
-	FOREIGN KEY (`NameID`) 
+	FOREIGN KEY (`Name`) 
 	REFERENCES `Taxa` (`TaxonID`);
 
 ALTER TABLE `Identifications` 
@@ -557,5 +547,3 @@ ALTER TABLE `SampleOccurrences`
 	ADD CONSTRAINT `sampleocc_occur_foreign` 
 	FOREIGN KEY (`Occurrence`) 
 	REFERENCES `Occurrences`(`OccurrenceID`);
-
-*/
