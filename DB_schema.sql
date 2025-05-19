@@ -113,8 +113,9 @@ CREATE TABLE `Identifications` (
 	`IdentificationID`  INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
 	`Occurrence`  INT UNSIGNED,
 	`Name` SMALLINT UNSIGNED,
-	`HybridSecondaryParental` SMALLINT UNSIGNED, -- If hybrid hasn't it own name, here the second parental name is included
+	`HybridSecondaryParental` SMALLINT UNSIGNED, -- If hybrid doesn't have its own name, the second parental name is included here
 	`Certainty` VARCHAR(20),
+	`IdentifiedByVerbatim` INT UNSIGNED, -- Sometimes id comes from a document; in that case identifier can be NULL
 	`IdentifiedBy` INT UNSIGNED, -- Sometimes id comes from a document; in that case identifier can be NULL
 	`Publication` SMALLINT UNSIGNED, 
 	`Date` DATE,
