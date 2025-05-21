@@ -137,7 +137,7 @@ CREATE TABLE `Occurrences` (
 	`Location` MEDIUMINT UNSIGNED,
 	`DateInit` DATE,
 	`DateEnd` DATE,
-	`PhenoState` TINYINT UNSIGNED, -- `Flower` | `Fruit` | `Flower and fruit` | `Sterile`,
+	`PhenoState` ENUM ('flor', 'fruto', 'flor y fruto', 'estéril'),
 	`Use` VARCHAR(255),
 	`CommonName` VARCHAR(255),
 	`Comment` VARCHAR(500),
