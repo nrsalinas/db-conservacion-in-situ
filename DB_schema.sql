@@ -140,7 +140,7 @@ CREATE TABLE `Occurrences` (
 	`PhenoState` ENUM ('flor', 'fruto', 'flor y fruto', 'estéril'),
 	`Use` VARCHAR(255),
 	`CommonName` VARCHAR(255),
-	`Comment` VARCHAR(500),
+	`Comment` VARCHAR(900),
 	`TimeStamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 	-- FOREIGN KEY (`Reference`) REFERENCES Sources (`SourceID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
