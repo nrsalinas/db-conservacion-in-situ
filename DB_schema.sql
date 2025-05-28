@@ -63,9 +63,9 @@ CREATE TABLE `Origins` (
 DROP TABLE IF EXISTS `Sources`;
 CREATE TABLE `Sources` (
 	`SourceID` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`Type` TINYINT UNSIGNED, -- 0:`Document`, 1:`Person`
+	`Type` ENUM ('Document', 'Person'),
 	`Author` INT UNSIGNED,
-	`Name` VARCHAR(255),
+	`Name` VARCHAR(750),
 	`Year` SMALLINT UNSIGNED,
 	`Journal` VARCHAR(255),
 	`Publisher` VARCHAR(255),
