@@ -193,7 +193,7 @@ CREATE TABLE `Locations` (
 	`Longitude` DOUBLE, -- decimal format, in label
 	`ElevationMin` DOUBLE, -- m alt
 	`ElevationMax` DOUBLE, -- m alt
-	`Name` VARCHAR(255),
+	`Name` VARCHAR(1000),
 	`Country` VARCHAR(255),
 	`Admin01` VARCHAR(255), -- departamento
 	`Admin02` VARCHAR(255), -- municipio
