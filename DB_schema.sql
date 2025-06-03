@@ -128,7 +128,7 @@ DROP TABLE IF EXISTS `Occurrences`;
 CREATE TABLE `Occurrences` (	
 	`OccurrenceID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`DB2015ID` INT UNSIGNED,
-	`Type` TINYINT UNSIGNED , -- `Specimen` | `Observation` | `Photograph`
+	`Type` ENUM ('Specimen' , 'Observation' , 'Photograph' , 'Document') , 
 	`Reference` SMALLINT UNSIGNED, -- Publication in `Sources`
 	`Collector` INT UNSIGNED,
 	`CollectorVerbatim` VARCHAR(255),
