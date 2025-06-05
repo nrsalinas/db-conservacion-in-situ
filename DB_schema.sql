@@ -132,7 +132,7 @@ CREATE TABLE `Occurrences` (
 	`Reference` SMALLINT UNSIGNED, -- Publication in `Sources`
 	`Collector` INT UNSIGNED,
 	`CollectorVerbatim` VARCHAR(255),
-	`CollectionNumber` SMALLINT UNSIGNED, -- Integer part of collection number
+	`CollectionNumber` MEDIUMINT UNSIGNED, -- Integer part of collection number
 	`CollectionNumberVerbatim` VARCHAR(255),
 	`Location` MEDIUMINT UNSIGNED,
 	`DateInit` DATE,
