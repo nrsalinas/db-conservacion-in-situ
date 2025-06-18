@@ -114,8 +114,8 @@ CREATE TABLE `Identifications` (
 	`Occurrence`  INT UNSIGNED,
 	`Name` SMALLINT UNSIGNED,
 	`HybridSecondaryParental` SMALLINT UNSIGNED, -- If hybrid doesn't have its own name, the second parental name is included here
-	`Certainty` VARCHAR(20),
-	`IdentifiedByVerbatim` INT UNSIGNED, -- Sometimes id comes from a document; in that case identifier can be NULL
+	`Certainty` ENUM ('aff.', 'cf.', 'vel sp. aff.', 'sp. nov.'),
+	`IdentifiedByVerbatim` VARCHAR(255), -- Sometimes id comes from a document; in that case identifier can be NULL
 	`IdentifiedBy` INT UNSIGNED, -- Sometimes id comes from a document; in that case identifier can be NULL
 	`Publication` SMALLINT UNSIGNED, 
 	`Date` DATE,
