@@ -175,7 +175,7 @@ CREATE TABLE `RedListAssessments` (
 	`AssessmentID` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`Standard` TINYINT UNSIGNED, -- `IUCN` | `USDA` | ...
 	`Taxon` SMALLINT UNSIGNED,
-	`Category` TINYINT UNSIGNED,
+	`Category` ENUM ('NE', 'DD', 'LC', 'NT', 'VU', 'EN', 'CR', 'EW', 'EX'), 
 	`Criteria` VARCHAR(255),
 	`Assessor` INT UNSIGNED,
 	`Publication` SMALLINT UNSIGNED,
@@ -198,7 +198,6 @@ CREATE TABLE `Locations` (
 	`Admin01` VARCHAR(255), -- departamento
 	`Admin02` VARCHAR(255), -- municipio
 	`Admin03` VARCHAR(255), -- vereda o corregimiento
-	`Area` MEDIUMINT UNSIGNED,
 	`TimeStamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
@@ -224,30 +223,6 @@ CREATE TABLE `Geocodings` (
 
 -- -----
 
-/****************************************************************
--- 
---?        IS THE TABLE `Areas` NECESSARY ?????
--- 
--- Still not sure if the table `Polygons` is really necessary,
--- polygon operations can be conducted with external rutines on 
--- shapefiles. Moreover, shapefiles are conntinually updating
--- (improved precision, adopting novel administrative boundaries, 
--- etc.) and seems more elegant to have that data as separate data
--- source 
--- 
--- ****************************************************************/
-
-DROP TABLE IF EXISTS `Areas`;
-CREATE TABLE `Areas` (
-	`AreaID`  MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`Name` VARCHAR(255),
-	`Parent`  MEDIUMINT UNSIGNED, 
-	`Shape` POLYGON,
-	`TimeStamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
-
--- ------
-
 DROP TABLE IF EXISTS `Observations`;
 CREATE TABLE `Observations` (
 	`ObservationID`  MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -266,7 +241,7 @@ CREATE TABLE `Traits` (
 	`TraitID`  MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`Name` VARCHAR(50),
 	`Description` VARCHAR(255),
-	`Type` TINYINT UNSIGNED, -- Meristic | Continuous | Discrete
+	`Type` ENUM ('Meristic', 'Continuous', 'Discrete'),
 	`Protocol` SMALLINT UNSIGNED,
 	`TimeStamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
@@ -439,11 +414,6 @@ ALTER TABLE `RedListAssessments`
 	FOREIGN KEY (`Publication`) 
 	REFERENCES `Sources` (`SourceID`);
 
-ALTER TABLE `Locations` 
-	ADD CONSTRAINT `locations_area_foreign` 
-	FOREIGN KEY(`Area`) 
-	REFERENCES `Areas`(`AreaID`);
-
 ALTER TABLE `Geocodings` 
 	ADD CONSTRAINT `geocodings_location_foreign` 
 	FOREIGN KEY (`Location`) 
@@ -458,11 +428,6 @@ ALTER TABLE `Geocodings`
 	ADD CONSTRAINT `geocodings_protocol_foreign` 
 	FOREIGN KEY (`Protocol`) 
 	REFERENCES `Sources` (`SourceID`);
-
-ALTER TABLE `Areas`
-	ADD CONSTRAINT `areas_parent_foreign`
-	FOREIGN KEY (`Parent`)
-	REFERENCES `Areas` (`AreaID`);
 
 ALTER TABLE `Observations` 
 	ADD CONSTRAINT `observations_observer_foreign` 
